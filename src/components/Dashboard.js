@@ -8,32 +8,33 @@ const data = [
   {
     id: 1,
     label: "Total Photos",
-    value: 10
+    value: 10,
   },
   {
     id: 2,
     label: "Total Topics",
-    value: 4
+    value: 4,
   },
   {
     id: 3,
     label: "User with the most uploads",
-    value: "Allison Saeng"
+    value: "Allison Saeng",
   },
   {
     id: 4,
     label: "User with the least uploads",
-    value: "Lukas Souza"
-  }
+    value: "Lukas Souza",
+  },
 ];
 
 class Dashboard extends Component {
-  state = { loading: false };
-  panelComponents = data.map(e => {
-    return (
-      <Panel key={e.id} id={e.id} label={e.label} value={e.value} />
-    );
-  })
+  state = {
+    loading: false,
+    focused: null,
+  };
+  panelComponents = data.map((e) => {
+    return <Panel key={e.id} id={e.id} label={e.label} value={e.value} />;
+  });
 
   render() {
     const dashboardClasses = classnames("dashboard");
@@ -41,9 +42,7 @@ class Dashboard extends Component {
     if (this.state.loading) {
       return <Loading />;
     }
-    return <main className={dashboardClasses}>
-      {this.panelComponents}
-    </main> 
+    return <main className={dashboardClasses}>{this.panelComponents}</main>;
   }
 }
 
