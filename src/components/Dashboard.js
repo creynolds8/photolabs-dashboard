@@ -32,9 +32,6 @@ class Dashboard extends Component {
     loading: false,
     focused: null,
   };
-  panelComponents = data.map((e) => {
-    return <Panel key={e.id} id={e.id} label={e.label} value={e.value} />;
-  });
 
   render() {
     const dashboardClasses = classnames("dashboard");
@@ -42,7 +39,16 @@ class Dashboard extends Component {
     if (this.state.loading) {
       return <Loading />;
     }
-    return <main className={dashboardClasses}>{this.panelComponents}</main>;
+
+    const panelComponents = (
+      this.state.focused
+        ? data.filter((e) => this.state.focused === e.id)
+        : data
+    ).map((e) => {
+      return <Panel key={e.id} id={e.id} label={e.label} value={e.value} />;
+    });
+
+    return <main className={dashboardClasses}>{panelComponents}</main>;
   }
 }
 
