@@ -38,8 +38,19 @@ class Dashboard extends Component {
   componentDidMount() {
     const focused = JSON.parse(localStorage.getItem("focused"));
     if (focused) {
-      this.setState({ focused })
+      this.setState({ focused });
     }
+    const urlsPromise = ["/api/photos", "/api/topics"].map((url) =>
+      fetch(url).then((response) => response.json())
+    );
+
+    Promise.all(urlsPromise).then(([photos, topics]) => {
+      this.setState({
+        loading: false,
+        photos: photos,
+        topics: topics,
+      });
+    });
   }
 
   componentDidUpdate(previousProps, previousState) {
@@ -49,8 +60,8 @@ class Dashboard extends Component {
   }
 
   selectPanel(id) {
-    this.setState(previousState => ({
-      focused: previousState.focused !== null ? null : id
+    this.setState((previousState) => ({
+      focused: previousState.focused !== null ? null : id,
     }));
   }
 
